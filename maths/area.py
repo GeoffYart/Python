@@ -1,7 +1,7 @@
 """
 Find the area of various geometric shapes
 """
-from math import pi, sqrt
+from math import pi, sqrt, tan
 
 
 def surface_area_cube(side_length: float) -> float:
@@ -457,6 +457,33 @@ def area_rhombus(diagonal_1: float, diagonal_2: float) -> float:
         raise ValueError("area_rhombus() only accepts non-negative values")
     return 1 / 2 * diagonal_1 * diagonal_2
 
+def area_regular_polygon(num_sides: int, side_length: float) -> float:
+    """
+    Calculate the area of a regular polygon
+    >>> area_regular_polygon(10, 20)
+    3077.6835371752527
+    >>> area_regular_polygon(5, 2.6)
+    11.630427227981414
+    >>> area_regular_polygon(5, 0)
+    0.0
+    >>> area_regular_polygon(-1, -2)
+    Traceback (most recent call last):
+        ...
+    ValueError: area_regular_polygon() only accepts non-negative values
+    >>> area_regular_polygon(1, 2)
+    Traceback (most recent call last):
+        ...
+    ValueError: Polygons must have greater than or equal to 3 sides
+    """
+    if num_sides < 0 or side_length < 0:
+        raise ValueError("area_regular_polygon() only accepts non-negative values")
+    if num_sides < 3:
+        raise ValueError("Polygons must have greater than or equal to 3 sides")
+
+    interior_angle = (pi - 2 * pi / num_sides) / 2
+    apothem = side_length / 2 * tan(interior_angle)
+
+    return (num_sides * apothem * side_length) / 2
 
 if __name__ == "__main__":
     import doctest
